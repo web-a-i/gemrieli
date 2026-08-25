@@ -1,1 +1,613 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gemrieli — грузинская кухня</title>
+<meta name="description" content="Gemrieli — современная грузинская кухня навынос и с доставкой." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800;900&family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink-dark:#1b0f14;
+    --ink-dark-2:#2a1720;
+    --paper:#f6ecdd;
+    --card:#fffaf1;
+    --ink:#251317;
+    --muted:#7a6357;
+    --muted-on-dark: rgba(244,234,217,.62);
+    --clay:#b8471f;
+    --clay-2:#8f3417;
+    --gold:#d99a2b;
+    --gold-2:#f0c368;
+    --wine:#6d1f3a;
+    --tarragon:#6f8c4f;
+    --cream:#f4ead9;
+    --line: rgba(37,19,23,.1);
+    --line-dark: rgba(244,234,217,.14);
+    --radius:22px;
+    --shadow: 0 24px 60px rgba(24,10,8,.16);
+    --ease: cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Golos Text",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.5;
+  }
+  h1,h2,h3,.font-display{font-family:"Unbounded",ui-sans-serif,system-ui,sans-serif}
+  button{font:inherit}
+  a{color:inherit}
+  .page{max-width:1240px;margin:0 auto;padding:0 22px 70px}
 
+  /* ---------- header ---------- */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 0;position:sticky;top:0;z-index:30;
+    background:rgba(246,236,221,.86);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand-mark{
+    width:38px;height:38px;border-radius:12px;
+    background:linear-gradient(150deg,var(--gold),var(--clay));
+    color:var(--ink-dark);display:grid;place-items:center;
+    font-family:"Unbounded";font-size:16px;font-weight:700;
+    box-shadow:0 8px 18px rgba(184,71,31,.28);
+    flex-shrink:0;
+  }
+  .brand-word{display:flex;flex-direction:column;line-height:1.05}
+  .brand-word b{font-family:"Unbounded";font-weight:700;font-size:21px;letter-spacing:-.02em}
+  .brand-word span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .header-right{display:flex;align-items:center;gap:10px}
+  .pill{
+    border:1px solid var(--line);background:rgba(255,250,241,.6);
+    padding:9px 14px;border-radius:999px;font-size:13px;color:var(--muted)
+  }
+  .cart-btn{
+    border:0;background:var(--ink-dark);color:var(--cream);border-radius:999px;
+    padding:11px 16px 11px 14px;cursor:pointer;display:flex;gap:9px;align-items:center;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+  }
+  .cart-btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(27,15,20,.25)}
+  .cart-btn svg{width:17px;height:17px}
+  #cartCount{
+    background:var(--gold);color:var(--ink-dark);min-width:20px;height:20px;border-radius:999px;
+    font-size:12px;font-weight:700;display:inline-grid;place-items:center;padding:0 5px;
+  }
+  #cartCount.bump{animation:bump .4s var(--ease)}
+  @keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.45)}100%{transform:scale(1)}}
+
+  /* ---------- hero ---------- */
+  .hero{
+    margin-top:20px;border-radius:32px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(circle at 82% 20%, rgba(217,154,43,.16), transparent 45%),
+      radial-gradient(circle at 15% 85%, rgba(184,71,31,.18), transparent 50%),
+      linear-gradient(160deg,#241019 0%,#1b0f14 60%,#170b10 100%);
+    color:var(--cream);
+    display:grid;grid-template-columns:1.05fr .95fr;align-items:center;
+    min-height:560px;box-shadow:var(--shadow);
+  }
+  .hero-watermark{
+    position:absolute;right:-40px;top:50%;transform:translateY(-50%);
+    font-family:"Unbounded";font-weight:800;font-size:min(38vw,520px);
+    line-height:1;color:transparent;
+    -webkit-text-stroke:1px rgba(240,195,104,.14);
+    pointer-events:none;user-select:none;z-index:0;
+  }
+  .hero-copy-col{position:relative;z-index:1;padding:60px 20px 60px 56px}
+  .eyebrow{
+    font-size:12.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold-2);
+    margin-bottom:16px;font-weight:600;display:flex;align-items:center;gap:9px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--gold-2);opacity:.7}
+  h1{
+    margin:0;max-width:600px;font-size:clamp(42px,5.4vw,68px);line-height:.98;
+    letter-spacing:-.02em;font-weight:600;
+  }
+  h1 em{font-style:normal;color:var(--gold-2)}
+  .hero-copy{max-width:480px;margin:22px 0 30px;color:var(--muted-on-dark);font-size:16.5px}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+  .primary,.secondary{
+    border-radius:999px;padding:14px 22px;border:0;cursor:pointer;font-weight:700;
+    font-size:14.5px;transition:transform .3s var(--ease),box-shadow .3s var(--ease),filter .3s;
+    text-decoration:none;display:inline-flex;align-items:center;
+  }
+  .primary{background:linear-gradient(120deg,var(--gold-2),var(--clay));color:#1b0f14}
+  .primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(184,71,31,.32)}
+  .secondary{background:rgba(244,234,217,.06);border:1px solid rgba(244,234,217,.2);color:var(--cream)}
+  .secondary:hover{background:rgba(244,234,217,.12);transform:translateY(-2px)}
+  .hero-meta{display:flex;gap:18px;flex-wrap:wrap}
+  .hero-meta span{font-size:13px;color:var(--muted-on-dark);display:flex;align-items:center;gap:7px}
+  .hero-meta span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold-2)}
+
+  .hero-scene{position:relative;z-index:1;height:100%;display:flex;align-items:center;justify-content:center;min-height:400px}
+  .plate-glow{
+    position:absolute;width:340px;height:340px;border-radius:50%;
+    background:radial-gradient(circle,rgba(240,195,104,.24),transparent 68%);
+    filter:blur(4px);
+  }
+  .illustration{position:relative;animation:floatY 5.5s ease-in-out infinite alternate}
+  @keyframes floatY{from{transform:translateY(0)}to{transform:translateY(-12px)}}
+  .illustration svg{width:min(78vw,340px);height:auto;display:block}
+  .steam path{
+    transform-origin:center bottom;opacity:0;
+  }
+  .steam path:nth-child(1){animation:steamRise 3.6s ease-in-out infinite}
+  .steam path:nth-child(2){animation:steamRise 3.6s ease-in-out infinite .9s}
+  .steam path:nth-child(3){animation:steamRise 3.6s ease-in-out infinite 1.8s}
+  @keyframes steamRise{
+    0%{transform:translateY(4px) scaleY(.85);opacity:0}
+    18%{opacity:.6}
+    55%{opacity:.5}
+    100%{transform:translateY(-24px) scaleY(1.2);opacity:0}
+  }
+
+  /* hero load stagger */
+  .rise{opacity:0;transform:translateY(16px);animation:riseIn .8s var(--ease) forwards}
+  .eyebrow.rise{animation-delay:.05s}
+  h1.rise{animation-delay:.16s}
+  .hero-copy.rise{animation-delay:.28s}
+  .cta-row.rise{animation-delay:.4s}
+  .hero-meta.rise{animation-delay:.5s}
+  @keyframes riseIn{to{opacity:1;transform:translateY(0)}}
+
+  /* ---------- ornament divider ---------- */
+  .ornament{
+    height:20px;margin:38px auto 8px;max-width:420px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='20' viewBox='0 0 28 20'%3E%3Cpath d='M2 10c2-6 8-6 12 0s10 6 12 0' fill='none' stroke='%23b8471f' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='M2 10c2 6 8 6 12 0s10-6 12 0' fill='none' stroke='%23d99a2b' stroke-width='1.6' stroke-linecap='round' opacity='.75'/%3E%3C/svg%3E");
+    background-repeat:repeat-x;background-position:center;opacity:.85;
+  }
+  .ornament.on-dark{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='20' viewBox='0 0 28 20'%3E%3Cpath d='M2 10c2-6 8-6 12 0s10 6 12 0' fill='none' stroke='%23f0c368' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='M2 10c2 6 8 6 12 0s10-6 12 0' fill='none' stroke='%23f4ead9' stroke-width='1.6' stroke-linecap='round' opacity='.5'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- menu ---------- */
+  .menu-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:18px 0 22px}
+  .menu-head h2{margin:0;font-size:clamp(32px,4vw,44px);letter-spacing:-.02em;font-weight:600}
+  .menu-note{color:var(--muted);max-width:380px;font-size:14.5px}
+
+  .tabs{
+    position:relative;display:flex;gap:4px;overflow-x:auto;padding:6px;margin-bottom:26px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    scrollbar-width:none;width:fit-content;max-width:100%;
+  }
+  .tabs::-webkit-scrollbar{display:none}
+  .tab-indicator{
+    position:absolute;top:6px;left:6px;height:calc(100% - 12px);border-radius:999px;
+    background:linear-gradient(120deg,var(--gold),var(--clay));
+    transition:transform .4s var(--ease),width .4s var(--ease);z-index:0;
+  }
+  .tab{
+    position:relative;z-index:1;white-space:nowrap;border:0;background:transparent;
+    color:var(--muted);padding:10px 17px;border-radius:999px;cursor:pointer;
+    font-size:14px;font-weight:600;transition:color .3s var(--ease);
+  }
+  .tab.active{color:#fffaf1}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .item{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;display:flex;flex-direction:column;min-height:380px;
+    opacity:0;transform:translateY(18px);
+    transition:opacity .6s var(--ease),transform .6s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
+    transition-delay:calc(var(--i,0) * 55ms);
+  }
+  .item.in-view{opacity:1;transform:translateY(0)}
+  .item:hover{box-shadow:var(--shadow);border-color:transparent;transform:translateY(-4px)}
+  .item.in-view:hover{transform:translateY(-4px)}
+
+  .dish{
+    height:230px;border-radius:16px;margin-bottom:16px;position:relative;overflow:hidden;
+    display:grid;place-items:center;
+  }
+  .dish img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    display:block;
+  }
+  .dish svg{width:56px;height:56px;transition:transform .4s var(--ease)}
+  .item:hover .dish svg{transform:scale(1.08) rotate(-2deg)}
+  .dish.tile-khachapuri{background:linear-gradient(155deg,rgba(217,154,43,.2),rgba(217,154,43,.05));color:var(--gold)}
+  .dish.tile-khinkali{background:linear-gradient(155deg,rgba(184,71,31,.18),rgba(184,71,31,.05));color:var(--clay)}
+  .dish.tile-hot{background:linear-gradient(155deg,rgba(109,31,58,.16),rgba(109,31,58,.05));color:var(--wine)}
+  .dish.tile-snacks{background:linear-gradient(155deg,rgba(111,140,79,.18),rgba(111,140,79,.05));color:var(--tarragon)}
+  .dish.tile-desserts{background:linear-gradient(155deg,rgba(240,195,104,.26),rgba(240,195,104,.07));color:var(--clay-2)}
+
+  .tag{
+    position:absolute;left:12px;top:12px;background:rgba(255,250,241,.92);
+    border:1px solid var(--line);padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;
+    color:var(--clay);z-index:2;letter-spacing:.01em;
+  }
+  .item h3{margin:0 0 6px;font-size:18.5px;letter-spacing:-.01em;font-weight:600;font-family:"Unbounded"}
+  .item p{margin:0;color:var(--muted);font-size:13.5px;min-height:38px;line-height:1.5}
+  .item-bottom{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:16px}
+  .price{font-weight:700;font-size:17px;font-family:"Unbounded";color:var(--ink)}
+  .add{
+    border:0;background:var(--clay);color:#fffaf1;border-radius:999px;padding:10px 16px;
+    cursor:pointer;font-weight:700;font-size:13px;transition:background .25s var(--ease),transform .2s var(--ease);
+  }
+  .add:hover{background:var(--clay-2);transform:translateY(-1px)}
+  .add:active{transform:translateY(0) scale(.96)}
+  .add.added{background:var(--tarragon)}
+
+  /* ---------- info ---------- */
+  .info{
+    margin-top:64px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#241019,#170b10);
+    color:var(--cream);border-radius:28px;padding:38px;
+    display:grid;grid-template-columns:1fr 1fr;gap:26px;
+  }
+  .info h3{font-size:clamp(26px,3vw,32px);letter-spacing:-.02em;margin:0 0 12px;font-weight:600}
+  .info p{color:var(--muted-on-dark);margin:0;max-width:520px;font-size:14.5px}
+  .info-box{
+    border:1px solid var(--line-dark);border-radius:18px;padding:17px;
+    transition:border-color .3s var(--ease),background .3s var(--ease);
+  }
+  .info-box:hover{border-color:rgba(240,195,104,.4);background:rgba(244,234,217,.03)}
+  .info-box strong{display:block;margin-bottom:5px;font-family:"Unbounded";font-size:14.5px;font-weight:600;color:var(--gold-2)}
+  .info-box span{font-size:13.5px;color:var(--muted-on-dark)}
+
+  footer{padding:44px 0 6px;color:var(--muted);display:flex;justify-content:space-between;gap:20px;font-size:13.5px}
+
+  /* ---------- cart drawer ---------- */
+  .drawer{
+    position:fixed;inset:0;background:rgba(15,7,10,.4);z-index:50;
+    opacity:0;pointer-events:none;transition:opacity .35s var(--ease);
+  }
+  .drawer.open{opacity:1;pointer-events:auto}
+  .panel{
+    position:absolute;right:0;top:0;height:100%;width:min(430px,100%);
+    background:var(--ink-dark-2);color:var(--cream);padding:26px;display:flex;flex-direction:column;
+    box-shadow:-24px 0 60px rgba(0,0,0,.3);
+    transform:translateX(100%);transition:transform .45s var(--ease);
+  }
+  .drawer.open .panel{transform:translateX(0)}
+  .panel-head{display:flex;justify-content:space-between;align-items:center}
+  .panel h3{font-size:24px;margin:0;font-weight:600}
+  .close{border:0;background:rgba(244,234,217,.08);color:var(--cream);width:34px;height:34px;border-radius:10px;font-size:20px;cursor:pointer;transition:background .25s}
+  .close:hover{background:rgba(244,234,217,.16)}
+  .cart-list{padding:22px 0;display:flex;flex-direction:column;gap:10px;overflow:auto}
+  .cart-row{
+    background:rgba(244,234,217,.04);border:1px solid var(--line-dark);border-radius:16px;padding:13px;
+    display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;
+    animation:rowIn .35s var(--ease);
+  }
+  @keyframes rowIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
+  .cart-row strong{font-size:14.5px;font-weight:600}
+  .cart-row small{display:block;color:var(--muted-on-dark);margin-top:3px;font-size:12.5px}
+  .qty{display:flex;align-items:center;gap:10px}
+  .qty button{
+    width:28px;height:28px;border-radius:8px;border:1px solid var(--line-dark);
+    background:transparent;color:var(--cream);cursor:pointer;transition:background .2s,border-color .2s;
+  }
+  .qty button:hover{background:rgba(244,234,217,.1);border-color:var(--gold-2)}
+  .empty{color:var(--muted-on-dark);text-align:center;padding:70px 10px;font-size:14.5px}
+  .total{
+    margin-top:auto;border-top:1px solid var(--line-dark);padding-top:16px;
+    display:flex;justify-content:space-between;align-items:center;font-family:"Unbounded";
+  }
+  .checkout{
+    width:100%;margin-top:14px;border:0;background:linear-gradient(120deg,var(--gold-2),var(--clay));color:#1b0f14;
+    padding:15px;border-radius:14px;font-weight:700;cursor:pointer;transition:transform .25s var(--ease),box-shadow .25s;
+  }
+  .checkout:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(184,71,31,.3)}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr}
+    .hero-copy-col{padding:44px 26px 10px}
+    .hero-scene{min-height:280px;padding-bottom:40px}
+    .hero-watermark{display:none}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .info{grid-template-columns:1fr}
+  }
+  @media (max-width:620px){
+    .page{padding:0 14px 44px}
+    .brand-word span{display:none}
+    .pill{display:none}
+    .menu-head{display:block}
+    .menu-head h2{margin-bottom:8px}
+    .grid{grid-template-columns:1fr}
+    footer{display:block}
+    footer span{display:block;margin-bottom:6px}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+    .item{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a href="#" class="brand" aria-label="gemrieli">
+        <span class="brand-mark">გ</span>
+        <span class="brand-word"><b>gemrieli</b><span>грузинская кухня</span></span>
+      </a>
+      <div class="header-right">
+        <span class="pill">Ежедневно · 11:00–23:00</span>
+        <button class="cart-btn" id="openCart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Корзина <span id="cartCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-watermark" aria-hidden="true">გ</div>
+        <div class="hero-copy-col">
+          <div class="eyebrow rise">Gemrieli · грузинская кухня навынос</div>
+          <h1 class="rise">вкус,<br>который <em>остаётся</em>.</h1>
+          <p class="hero-copy rise">Хинкали, хачапури, сациви и другие блюда грузинской кухни — готовим каждый день и собираем заказ прямо к вашему столу.</p>
+          <div class="cta-row rise">
+            <a class="primary" href="#menu">Смотреть меню</a>
+            <button class="secondary" id="heroCart">Открыть корзину</button>
+          </div>
+          <div class="hero-meta rise">
+            <span>ежедневно 11:00–23:00</span>
+            <span>самовывоз за 20 минут</span>
+            <span>доставка по городу</span>
+          </div>
+        </div>
+
+        <div class="hero-scene">
+          <div class="plate-glow" aria-hidden="true"></div>
+          <div class="illustration" aria-hidden="true">
+            <svg viewBox="0 0 220 200">
+              <g class="steam" stroke="#f4ead9" stroke-width="4" stroke-linecap="round" fill="none">
+                <path d="M92 66c-6-8 6-14 0-24"/>
+                <path d="M112 60c-6-8 6-16 0-26"/>
+                <path d="M132 66c-6-8 6-14 0-24"/>
+              </g>
+              <ellipse cx="110" cy="150" rx="92" ry="14" fill="#f4ead9" opacity=".07"/>
+              <path d="M28 138c8-40 40-64 82-64s74 24 82 64" fill="none" stroke="#d99a2b" stroke-width="5" stroke-linecap="round"/>
+              <path d="M22 138c6 26 42 44 88 44s82-18 88-44" fill="#e0a340" stroke="#8f3417" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M22 138c6 26 42 44 88 44s82-18 88-44" fill="none" stroke="#8f3417" stroke-width="4" opacity=".35"/>
+              <circle cx="110" cy="118" r="17" fill="#f5da8f"/>
+              <circle cx="110" cy="118" r="17" fill="none" stroke="#c1791f" stroke-width="2"/>
+              <circle cx="104" cy="112" r="4" fill="#fff3d0" opacity=".8"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <div class="ornament" aria-hidden="true"></div>
+
+      <section id="menu">
+        <div class="menu-head">
+          <div>
+            <div class="eyebrow" style="color:var(--clay)">меню</div>
+            <h2>Выбирайте своё</h2>
+          </div>
+          <p class="menu-note">Простое меню без лишнего: классические рецепты, свежие продукты и понятные цены.</p>
+        </div>
+
+        <div class="tabs" id="tabs"></div>
+        <div class="grid" id="grid"></div>
+      </section>
+
+      <section class="info">
+        <div>
+          <div class="eyebrow" style="margin-bottom:12px">Gemrieli</div>
+          <h3>Быстро. тепло. по-грузински.</h3>
+          <p>Заказы принимаем ежедневно. можно забрать с собой или оформить доставку по городу.</p>
+        </div>
+        <div style="display:grid;gap:10px">
+          <div class="info-box"><strong>Самовывоз</strong><span>Через 20–30 минут после заказа</span></div>
+          <div class="info-box"><strong>Доставка</strong><span>От 45 минут, зависит от района</span></div>
+          <div class="info-box"><strong>Заказ</strong><span>Оплата картой или наличными</span></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="ornament on-dark" style="opacity:.5" aria-hidden="true"></div>
+
+    <footer>
+      <span>© 2026 GEMRIELI</span>
+      <span>Грузинская кухня · навынос и доставка</span>
+    </footer>
+  </div>
+
+  <div class="drawer" id="drawer">
+    <div class="panel">
+      <div class="panel-head">
+        <h3>корзина</h3>
+        <button class="close" id="closeCart" aria-label="Закрыть">×</button>
+      </div>
+      <div class="cart-list" id="cartList"></div>
+      <div class="total">
+        <strong>Итого</strong>
+        <strong id="total">0 ₽</strong>
+      </div>
+      <button class="checkout" id="checkout">Оформить заказ</button>
+    </div>
+  </div>
+
+  <script>
+    const categories = [
+      {id:"all", name:"Всё меню"},
+      {id:"khachapuri", name:"Хачапури"},
+      {id:"khinkali", name:"Хинкали"},
+      {id:"hot", name:"Горячее"},
+      {id:"snacks", name:"Закуски"},
+      {id:"desserts", name:"Десерты"}
+    ];
+
+    const dishes = [
+      {id:1,cat:"khachapuri",name:"Хачапури по-аджарски",desc:"Лодочка из теста, сыр сулугуни, желток и сливочное масло.",price:690,tag:"хит"},
+      {id:2,cat:"khachapuri",name:"Хачапури по-мегрельски",desc:"Мягкое тесто и двойной слой расплавленного сыра.",price:620,tag:""},
+      {id:3,cat:"khachapuri",name:"Хачапури с зеленью",desc:"Сулугуни, свежая зелень и тонкое румяное тесто.",price:570,tag:"новинка"},
+      {id:4,cat:"khinkali",name:"Хинкали с говядиной",desc:"Сочные хинкали с бульоном, чёрным перцем и кинзой.",price:560,tag:"популярное"},
+      {id:5,cat:"khinkali",name:"Хинкали с бараниной",desc:"Ароматная начинка из баранины и свежей зелени.",price:590,tag:""},
+      {id:6,cat:"hot",name:"Чашушули",desc:"Тушёная говядина с томатами, луком и специями.",price:760,tag:""},
+      {id:7,cat:"hot",name:"Оджахури",desc:"Жареный картофель, свинина, лук и пряные травы.",price:720,tag:""},
+      {id:8,cat:"snacks",name:"Пхали ассорти",desc:"Свёкла, шпинат и фасоль с грецким орехом.",price:520,tag:""},
+      {id:9,cat:"snacks",name:"Баклажаны с орехом",desc:"Запечённые баклажаны с ореховой пастой и гранатом.",price:490,tag:""},
+      {id:10,cat:"desserts",name:"Медовик с мацони",desc:"Нежные коржи, крем на мацони и лёгкая сладость мёда.",price:430,tag:"новинка"},
+      {id:11,cat:"desserts",name:"Чурчхела",desc:"Грецкий орех в плотном виноградном соке.",price:320,tag:""},
+      {id:12,cat:"desserts",name:"Наполеон по-домашнему",desc:"Слоёное тесто и ванильный крем.",price:410,tag:""}
+    ];
+
+    const photos = {
+      1: "photo_1.png",
+      2: "photo_2.png",
+      3: "photo_3.png",
+      4: "photo_4.png",
+      5: "photo_4.png",
+      6: "photo_5.png",
+      7: "photo_6.png",
+      8: "photo_7.png",
+      9: "photo_8.png",
+      10: "photo_9.png",
+      11: "photo_10.png",
+      12: "photo_11.png"
+    };
+
+    const tabsEl = document.getElementById("tabs");
+    const gridEl = document.getElementById("grid");
+    const drawer = document.getElementById("drawer");
+    const cartList = document.getElementById("cartList");
+    const cartCount = document.getElementById("cartCount");
+    const totalEl = document.getElementById("total");
+    const cart = {};
+
+    const rub = n => n.toLocaleString("ru-RU") + " ₽";
+
+    const revealObserver = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add("in-view");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.12, rootMargin:"0px 0px -40px 0px"}) : null;
+
+    function renderTabs(active="all"){
+      tabsEl.innerHTML = `<div class="tab-indicator" id="tabIndicator"></div>` + categories.map(c =>
+        `<button class="tab ${c.id===active ? "active":""}" data-cat="${c.id}">${c.name}</button>`
+      ).join("");
+      tabsEl.querySelectorAll(".tab").forEach(btn => {
+        btn.addEventListener("click", () => {
+          renderTabs(btn.dataset.cat);
+          renderGrid(btn.dataset.cat);
+        });
+      });
+      requestAnimationFrame(moveIndicator);
+    }
+
+    function moveIndicator(){
+      const active = tabsEl.querySelector(".tab.active");
+      const indicator = document.getElementById("tabIndicator");
+      if(!active || !indicator) return;
+      indicator.style.width = active.offsetWidth + "px";
+      indicator.style.transform = `translateX(${active.offsetLeft - 6}px)`;
+    }
+    window.addEventListener("resize", moveIndicator);
+
+    function renderGrid(category="all"){
+      const filtered = category==="all" ? dishes : dishes.filter(d => d.cat===category);
+      gridEl.innerHTML = filtered.map((d,i) => `
+        <article class="item" style="--i:${i % 9}">
+          <div class="dish tile-${d.cat}">
+            ${d.tag ? `<span class="tag">${d.tag}</span>` : ""}
+            ${photos[d.id] ? `<img src="./${photos[d.id]}" alt="${d.name}">` : ""}
+          </div>
+          <h3>${d.name}</h3>
+          <p>${d.desc}</p>
+          <div class="item-bottom">
+            <div class="price">${rub(d.price)}</div>
+            <button class="add" data-id="${d.id}">Добавить</button>
+          </div>
+        </article>
+      `).join("");
+      gridEl.querySelectorAll(".add").forEach(btn => {
+        btn.addEventListener("click", () => addToCart(Number(btn.dataset.id), btn));
+      });
+      if(revealObserver){
+        gridEl.querySelectorAll(".item").forEach(el => revealObserver.observe(el));
+      } else {
+        gridEl.querySelectorAll(".item").forEach(el => el.classList.add("in-view"));
+      }
+    }
+
+    function addToCart(id, btn){
+      cart[id] = (cart[id] || 0) + 1;
+      renderCart();
+      cartCount.classList.remove("bump");
+      void cartCount.offsetWidth;
+      cartCount.classList.add("bump");
+      if(btn){
+        const original = btn.textContent;
+        btn.textContent = "Добавлено ✓";
+        btn.classList.add("added");
+        clearTimeout(btn._t);
+        btn._t = setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove("added");
+        }, 900);
+      }
+    }
+
+    function changeQty(id, delta){
+      cart[id] = (cart[id] || 0) + delta;
+      if(cart[id] <= 0) delete cart[id];
+      renderCart();
+    }
+
+    function renderCart(){
+      const entries = Object.entries(cart).map(([id,qty]) => ({dish:dishes.find(d=>d.id===Number(id)),qty}));
+      const count = entries.reduce((sum,x)=>sum+x.qty,0);
+      const total = entries.reduce((sum,x)=>sum+x.qty*x.dish.price,0);
+
+      cartCount.textContent = count;
+      totalEl.textContent = rub(total);
+
+      cartList.innerHTML = entries.length ? entries.map(({dish,qty}) => `
+        <div class="cart-row">
+          <div>
+            <strong>${dish.name}</strong>
+            <small>${rub(dish.price)} · ${rub(dish.price*qty)}</small>
+          </div>
+          <div class="qty">
+            <button data-minus="${dish.id}">−</button>
+            <span>${qty}</span>
+            <button data-plus="${dish.id}">+</button>
+          </div>
+        </div>
+      `).join("") : `<div class="empty">пока здесь пусто.<br>добавьте что-нибудь из меню.</div>`;
+
+      cartList.querySelectorAll("[data-minus]").forEach(b => b.onclick=()=>changeQty(Number(b.dataset.minus),-1));
+      cartList.querySelectorAll("[data-plus]").forEach(b => b.onclick=()=>changeQty(Number(b.dataset.plus),1));
+    }
+
+    function openCart(){ drawer.classList.add("open"); }
+    function closeCart(){ drawer.classList.remove("open"); }
+
+    document.getElementById("openCart").onclick = openCart;
+    document.getElementById("heroCart").onclick = openCart;
+    document.getElementById("closeCart").onclick = closeCart;
+    drawer.addEventListener("click", e => { if(e.target===drawer) closeCart(); });
+
+    document.getElementById("checkout").onclick = () => {
+      if(Object.keys(cart).length===0) {
+        alert("Корзина пуста.");
+        return;
+      }
+      alert("Спасибо! Это демонстрационная версия сайта. Здесь можно подключить реальную оплату и оформление заказа.");
+    };
+
+    renderTabs();
+    renderGrid();
+    renderCart();
+  </script>
+</body>
+</html>
