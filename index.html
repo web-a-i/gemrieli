@@ -1618,7 +1618,6 @@
       transform:translateY(1px) scale(.985);
     }
 
-    /* ---------- custom toast ---------- */
 
     .toast-stack{
       position:fixed;
@@ -1706,7 +1705,6 @@
     }
 
 
-    /* Hover-only affordances: prevents sticky tap states on touch devices. */
     @media (hover:hover) and (pointer:fine){
       .btn:hover{transform:translateY(-2px)}
       .btn-primary:hover{box-shadow:0 18px 34px rgba(212,155,69,.28)}
@@ -2097,7 +2095,6 @@
 <body>
   <div class="page">
 
-    <!-- Header -->
     <header>
       <a href="#" class="brand" aria-label="Gemrieli — на главную">
         <span class="brand-mark" aria-hidden="true">
@@ -2133,7 +2130,6 @@
 
     <main>
 
-      <!-- Hero -->
       <section class="hero">
         <div class="hero-inner">
 
@@ -2168,7 +2164,6 @@
             </div>
           </div>
 
-          <!-- Culinary showcase instead of crypto-style orbit -->
           <div class="hero-showcase" aria-label="Популярные блюда">
             <div class="hero-dawn" aria-hidden="true"></div>
 
@@ -2261,8 +2256,6 @@
           </p>
         </div>
 
-        <!-- Indicator intentionally lives OUTSIDE scroll viewport:
-             offset = active.offsetLeft - tabs.scrollLeft -->
         <div class="tabs-wrap section-reveal">
           <div class="tabs" id="tabs" role="tablist" aria-label="Категории меню"></div>
           <div class="tab-indicator" id="tabIndicator" aria-hidden="true"></div>
@@ -2271,7 +2264,6 @@
         <div class="grid" id="grid"></div>
       </section>
 
-      <!-- Info -->
       <section class="info section-reveal">
         <div class="info-copy">
           <div class="eyebrow">Gemrieli</div>
@@ -2325,15 +2317,15 @@
 
         <div class="gallery" aria-label="Галерея Gemrieli">
           <figure class="gallery-card">
-            <img src="./photo_1.png" alt="Блюдо из кухни Gemrieli" loading="lazy">
+            <img src="./photo_12.png" alt="Блюдо из кухни Gemrieli" loading="lazy">
             <figcaption class="gallery-caption">Блюда, которые собираем перед выдачей</figcaption>
           </figure>
           <figure class="gallery-card">
-            <img src="./photo_4.png" alt="Хинкали в Gemrieli" loading="lazy">
+            <img src="./photo_13.png" alt="Хинкали в Gemrieli" loading="lazy">
             <figcaption class="gallery-caption">Ручная лепка и знакомые грузинские вкусы</figcaption>
           </figure>
           <figure class="gallery-card">
-            <img src="./photo_9.png" alt="Десерт Gemrieli" loading="lazy">
+            <img src="./photo_14.png" alt="Десерт Gemrieli" loading="lazy">
             <figcaption class="gallery-caption">Десерты — финальный акцент заказа</figcaption>
           </figure>
         </div>
@@ -2404,7 +2396,6 @@
     </main>
   </div>
 
-  <!-- Cart drawer -->
   <div
     class="drawer"
     id="drawer"
@@ -2437,13 +2428,9 @@
     </aside>
   </div>
 
-  <!-- Toasts -->
   <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 
   <script>
-    /* =========================================================
-       DATA
-    ========================================================= */
 
     const categories = [
       { id: "all", name: "Всё меню" },
@@ -2592,9 +2579,6 @@
       12: "photo_11.png"
     };
 
-    /* =========================================================
-       DOM
-    ========================================================= */
 
     const tabsEl = document.getElementById("tabs");
     const tabIndicator = document.getElementById("tabIndicator");
@@ -2615,9 +2599,6 @@
     const rub = (n) =>
       n.toLocaleString("ru-RU") + " ₽";
 
-    /* =========================================================
-       FALLBACK SVG ILLUSTRATIONS
-    ========================================================= */
 
     const fallbackSvgs = {
       khachapuri: `
@@ -2707,9 +2688,6 @@
       });
     }
 
-    /* =========================================================
-       SCROLL REVEAL
-    ========================================================= */
 
     const revealObserver =
       "IntersectionObserver" in window
@@ -2741,9 +2719,6 @@
       });
     }
 
-    /* =========================================================
-       TABS
-    ========================================================= */
 
     function renderTabs(){
       tabsEl.innerHTML = categories
@@ -2768,11 +2743,6 @@
 
       if (!active || !tabIndicator) return;
 
-      /*
-        Critical mobile fix:
-        The indicator is OUTSIDE the horizontally scrolling .tabs viewport,
-        so its X coordinate must subtract tabs.scrollLeft.
-      */
       const x = active.offsetLeft - tabsEl.scrollLeft;
 
       tabIndicator.style.width = active.offsetWidth + "px";
@@ -2820,9 +2790,6 @@
 
     window.addEventListener("resize", moveIndicator);
 
-    /* =========================================================
-       MENU
-    ========================================================= */
 
     function renderGrid(category = "all"){
       const filtered =
@@ -2921,9 +2888,6 @@
         .replaceAll("'","&#039;");
     }
 
-    /* =========================================================
-       CART
-    ========================================================= */
 
     function addToCart(id, button){
       cart[id] = (cart[id] || 0) + 1;
@@ -3043,9 +3007,6 @@
       });
     }
 
-    /* =========================================================
-       CART DRAWER
-    ========================================================= */
 
     function openCart(){
       lastFocusedElement = document.activeElement;
@@ -3082,11 +3043,6 @@
       }
     });
 
-    /*
-      Escape shortcut:
-      - closes cart drawer
-      - body scroll is unlocked in closeCart()
-    */
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && drawer.classList.contains("open")){
         closeCart();
@@ -3115,9 +3071,6 @@
       }
     });
 
-    /* =========================================================
-       CUSTOM TOASTS — replaces native alert()
-    ========================================================= */
 
     function showToast(title, message){
       const toast = document.createElement("div");
@@ -3155,9 +3108,6 @@
       setTimeout(remove, 3200);
     }
 
-    /* =========================================================
-       CHECKOUT
-    ========================================================= */
 
     document.getElementById("checkout").addEventListener("click", () => {
       if (!Object.keys(cart).length){
@@ -3174,9 +3124,6 @@
       );
     });
 
-    /* =========================================================
-       INIT
-    ========================================================= */
 
     renderTabs();
     renderGrid();
